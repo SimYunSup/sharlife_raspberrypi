@@ -1,4 +1,4 @@
-# raspberrypi_client
+# client
 
 ## Project setup
 ```
