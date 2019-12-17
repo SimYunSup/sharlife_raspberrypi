@@ -71,11 +71,31 @@ def scanOff():
 
     return jsonify({'state': state, 'id': id})
 
-# sanity check route
-@app.route('/ping', methods=['GET'])
-def ping_pong():
-   return jsonify('pong!')
+@app.route('/onN', methods=['GET'])
+def onN():
+    state = True
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(12, GPIO.OUT)
+    p = GPIO.PWM(12, 50)
+    p.start(0)
+    p.ChangeDutyCycle(8.5)
+    time.sleep(1)
+    p.ChangeDutyCycle(0)
+    GPIO.cleanup()
+    return jsonify({'state': state})
 
+@app.route('/offN', methods=['GET'])
+def offN():
+    state = True
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(12, GPIO.OUT)
+    p = GPIO.PWM(12, 50)
+    p.start(0)
+    p.ChangeDutyCycle(5)
+    time.sleep(1)
+    p.ChangeDutyCycle(0)
+    GPIO.cleanup()
+    return jsonify({'state': state})
 
 if __name__ == '__main__':
    app.run()
